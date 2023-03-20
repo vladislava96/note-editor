@@ -34,9 +34,8 @@ export default function NoteEditor(props: NoteEditorProps) {
         <textarea
           name="text"
           onChange={event => setText(event.target.value)}
-        >
-          { text }
-        </textarea>
+          value={text}
+        />
         <Tags
           value={toTagify(tags)}
           onChange={event => setTags(fromTagify(event.detail.tagify.value))}
