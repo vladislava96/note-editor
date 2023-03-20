@@ -1,10 +1,12 @@
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 
-type Note = { id: number; text: string, tags: string[] };
+export type Note = { id: number; text: string, tags: string[] };
 
 const notesAdapter = createEntityAdapter<Note>({
   selectId: (note) => note.id
 })
+
+export const notesSelectors = notesAdapter.getSelectors();
 
 const booksSlice = createSlice({
   name: 'notes',
