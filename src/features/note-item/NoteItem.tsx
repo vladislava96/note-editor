@@ -1,4 +1,5 @@
-import { Note } from "../notes/notesSlice";
+import { useAppDispatch } from "../../app/hooks";
+import { Note, removeNote } from "../notes/notesSlice";
 import './NodeItem.scss';
 
 interface NoteItemProps {
@@ -6,6 +7,7 @@ interface NoteItemProps {
 }
 
 export default function NoteItem(props: NoteItemProps) {
+  const dispatch = useAppDispatch();
   const note = props.note;
   return (
     <div className="Node-item">
@@ -16,6 +18,9 @@ export default function NoteItem(props: NoteItemProps) {
       <div>
         <b>Tags: </b>
         { note.tags.map((tag) => <span>{ tag }</span>) }
+      </div>
+      <div>
+        <button onClick={() => dispatch(removeNote(note.id))} type="button" className="btn btn-outline-danger">Delete</button>
       </div>
     </div>
   )
