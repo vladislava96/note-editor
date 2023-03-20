@@ -25,8 +25,9 @@ export default function NoteEditor(props: NoteEditorProps) {
 
   function onFormSubmit(event: FormEvent) {
     event.preventDefault();
-
     onSave({ id: note.id, text, tags });
+    setText('');
+    setTags([]);
   }
 
   return (
