@@ -3,6 +3,7 @@ import { Note } from '../notes/notesSlice';
 import { TagData } from '@yaireo/tagify';
 import Tags from '@yaireo/tagify/dist/react.tagify';
 import '@yaireo/tagify/dist/tagify.css';
+import './NoteEditor.scss';
 
 interface NoteEditorProps {
   note: Note;
@@ -29,9 +30,10 @@ export default function NoteEditor(props: NoteEditorProps) {
   }
 
   return (
-    <div>
-      <form onSubmit={onFormSubmit}>
+    <div className='Note-editor'>
+      <form className='Note-editor__form' onSubmit={onFormSubmit}>
         <textarea
+          className='Note-editor__textarea'
           name="text"
           onChange={event => setText(event.target.value)}
           value={text}
@@ -40,7 +42,7 @@ export default function NoteEditor(props: NoteEditorProps) {
           value={toTagify(tags)}
           onChange={event => setTags(fromTagify(event.detail.tagify.value))}
         />
-        <button type="submit">Save</button>
+        <button type="submit" className="btn btn-primary">Save</button>
       </form>
     </div>
   )

@@ -1,0 +1,24 @@
+.Note-editor {
+  width: 40%;
+  box-sizing: border-box;
+  padding: 15px;
+
+  .Note-editor__form {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    row-gap: 10px;
+    width: 100%;
+    border-radius: 3px;
+    box-shadow: 1px 4px 16px 0px rgba(34, 60, 80, 0.2);
+    background-color: white;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 15px;
+
+    .Note-editor__textarea {
+      width: 100%;
+    }
+  }
+}
+
