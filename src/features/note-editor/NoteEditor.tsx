@@ -5,13 +5,18 @@ import Tags from '@yaireo/tagify/dist/react.tagify';
 import '@yaireo/tagify/dist/tagify.css';
 import './NoteEditor.scss';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { selectNoteForEdit, updateEditedNoteTags, updateEditedNoteText } from './NodeEditorSlice';
+import {
+  fillTagsFromText,
+  selectNoteForEdit,
+  updateEditedNoteTags,
+  updateEditedNoteText
+} from './NodeEditorSlice';
 
 
 export default function NoteEditor() {
   const dispatch = useAppDispatch();
   const note = useAppSelector(state => state.noteEditor.value)
-  
+
   function toTagify(values: string[]): TagData[] {
     return values.map(value => ({ value }));
   }
@@ -25,13 +30,13 @@ export default function NoteEditor() {
 
     const newNote = { id: note.id, text: note.text, tags: note.tags }
 
-    if(note.id === 0) {
+    if (note.id === 0) {
       dispatch(addNote(newNote));
     } else {
       dispatch(updateNote({ id: note.id, changes: newNote }));
     }
 
-    dispatch(selectNoteForEdit({id: 0, text: '', tags: []}))
+    dispatch(selectNoteForEdit({ id: 0, text: '', tags: [] }))
   }
 
   return (
@@ -42,6 +47,7 @@ export default function NoteEditor() {
           className='Note-editor__textarea'
           name="text"
           onChange={event => dispatch(updateEditedNoteText(event.target.value))}
+          onBlur={() => dispatch(fillTagsFromText())}
           value={note.text}
         />
         Add tags:

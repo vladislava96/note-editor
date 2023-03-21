@@ -16,17 +16,34 @@ const noteEditorSlice = createSlice({
   initialState,
   reducers: {
     selectNoteForEdit(state, action: PayloadAction<Note>){
-      state.value = action.payload
+      state.value = action.payload;
     },
     updateEditedNoteText(state, action: PayloadAction<string>){
-      state.value.text = action.payload
+      state.value.text = action.payload;
+    },
+    fillTagsFromText(state) {
+      const { text, tags } = state.value;
+      const matches = text.match(/#.+?(\s|$)/gm);
+      if(matches) {
+        for(const match of matches) {
+          const tag = match.trim().slice(1);
+          if (!tags.includes(tag)) {
+            tags.push(tag)
+          }
+        }
+      }
     },
     updateEditedNoteTags(state, action: PayloadAction<string[]>){
-      state.value.tags = action.payload
+      state.value.tags = action.payload;
     }
   },
 })
 
-export const { selectNoteForEdit, updateEditedNoteText, updateEditedNoteTags } = noteEditorSlice.actions;
+export const {
+  selectNoteForEdit,
+  updateEditedNoteText,
+  fillTagsFromText,
+  updateEditedNoteTags
+} = noteEditorSlice.actions;
 
 export default noteEditorSlice.reducer;
