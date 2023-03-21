@@ -17,15 +17,15 @@ function App() {
 
   return (
     <div className="App">
-      <div className="create-btn">
+      <div className="App__block">
         <button
           className="btn btn-primary" 
           onClick={onCreateButtonClick}
         >
           Create
         </button>
+        <NoteEditor />
       </div>
-      <NoteEditor />
       <NoteList />
     </div>
   );

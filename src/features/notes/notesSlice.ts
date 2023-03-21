@@ -43,7 +43,7 @@ const notesSlice = createSlice({
     removeNote(state, action: PayloadAction<number>) {
       notesAdapter.removeOne(state, action);
       saveToLocalStorage(state);
-    } 
+    }
   },
 })
 

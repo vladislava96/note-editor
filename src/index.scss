@@ -1,8 +1,11 @@
 @import '~bootstrap/scss/bootstrap.scss';
 
 .App {
-  display: flex;
-  .create-btn {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 90%;
+  margin: 0 auto;
+  .App__block {
     box-sizing: border-box;
     padding: 15px;
   }
