@@ -7,7 +7,7 @@ export default function NoteList() {
   const notes = useAppSelector(state => notesSelectors.selectAll(state.notes))
   return (
     <div className="Note-list">
-      { notes.map((note) => <NoteItem note={note} />) }
+      { notes.map((note) => <NoteItem note={note} key={note.id}/>) }
     </div>
   )
 }

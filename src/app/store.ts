@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import notesReducer from '../features/notes/notesSlice';
+import noteEditorReducer from '../features/note-editor/NodeEditorSlice'
 
 export const store = configureStore({
   reducer: {
-    notes: notesReducer
+    notes: notesReducer,
+    noteEditor: noteEditorReducer
   },
 });
 

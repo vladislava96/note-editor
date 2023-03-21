@@ -1,20 +1,17 @@
-import { useState, FormEvent } from 'react';
-import { Note } from '../notes/notesSlice';
+import { FormEvent } from 'react';
+import { addNote, updateNote } from '../notes/notesSlice';
 import { TagData } from '@yaireo/tagify';
 import Tags from '@yaireo/tagify/dist/react.tagify';
 import '@yaireo/tagify/dist/tagify.css';
 import './NoteEditor.scss';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { selectNoteForEdit, updateEditedNoteTags, updateEditedNoteText } from './NodeEditorSlice';
 
-interface NoteEditorProps {
-  note: Note;
-  onSave: (newNote: Note) => void;
-}
 
-export default function NoteEditor(props: NoteEditorProps) {
-  const { note, onSave } = props;
-  const [tags, setTags] = useState(note.tags);
-  const [text, setText] = useState(note.text);
-
+export default function NoteEditor() {
+  const dispatch = useAppDispatch();
+  const note = useAppSelector(state => state.noteEditor.value)
+  
   function toTagify(values: string[]): TagData[] {
     return values.map(value => ({ value }));
   }
@@ -25,23 +22,32 @@ export default function NoteEditor(props: NoteEditorProps) {
 
   function onFormSubmit(event: FormEvent) {
     event.preventDefault();
-    onSave({ id: note.id, text, tags });
-    setText('');
-    setTags([]);
+
+    const newNote = { id: note.id, text: note.text, tags: note.tags }
+
+    if(note.id === 0) {
+      dispatch(addNote(newNote));
+    } else {
+      dispatch(updateNote({ id: note.id, changes: newNote }));
+    }
+
+    dispatch(selectNoteForEdit({id: 0, text: '', tags: []}))
   }
 
   return (
     <div className='Note-editor'>
       <form className='Note-editor__form' onSubmit={onFormSubmit}>
+        Add text:
         <textarea
           className='Note-editor__textarea'
           name="text"
-          onChange={event => setText(event.target.value)}
-          value={text}
+          onChange={event => dispatch(updateEditedNoteText(event.target.value))}
+          value={note.text}
         />
+        Add tags:
         <Tags
-          value={toTagify(tags)}
-          onChange={event => setTags(fromTagify(event.detail.tagify.value))}
+          value={toTagify(note.tags)}
+          onChange={event => dispatch(updateEditedNoteTags(fromTagify(event.detail.tagify.value)))}
         />
         <button type="submit" className="btn btn-primary">Save</button>
       </form>
