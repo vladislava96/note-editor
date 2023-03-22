@@ -10,7 +10,13 @@ export const notesSelectors = notesAdapter.getSelectors();
 
 let id = 1;
 
-const initialState = notesAdapter.getInitialState(JSON.parse(localStorage.getItem('note') ?? ''))
+let initialState;
+
+if (localStorage.getItem('note')) {
+  initialState = notesAdapter.getInitialState(JSON.parse(localStorage.getItem('note') ?? ''))
+} else {
+  initialState = notesAdapter.getInitialState()
+}
 
 const notes = notesSelectors.selectAll(initialState)
 
