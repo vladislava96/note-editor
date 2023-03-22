@@ -49,6 +49,7 @@ export default function NoteEditor() {
           onChange={event => dispatch(updateEditedNoteText(event.target.value))}
           onBlur={() => dispatch(fillTagsFromText())}
           value={note.text}
+          required
         />
         Add tags:
         <Tags
